@@ -41,9 +41,9 @@ const main = async (args: Namespace) => {
     const concurrencyLimit = 5;
     const promises = new Array(concurrencyLimit).fill(Promise.resolve());
 
-    let blockCounter = 13280;
+    const blockStarter = 1607940;
 
-    const calls = generateBlockCalls(blockCounter, heightLimit);
+    const calls = generateBlockCalls(blockStarter, heightLimit);
     const callsCopy = ([] as string[]).concat(calls.map((val) => val))
 
 
@@ -68,11 +68,9 @@ const main = async (args: Namespace) => {
                         console.log('>>>>------------------WINNER-----------------<<<<');
                         console.log('>>>>-----------------------------------------<<<<');
                         blocksFound.push(parsedBlock['number']);
-
-                        blockCounter += skipSize;
+                        callsCopy.splice(0, skipSize);
                     } else {
                         console.log(`Found nothing in Block ${parsedBlock['number']}`)
-                        blockCounter += 1;
                     }
                 });
                 return chainNext(operationPromise);
